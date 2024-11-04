@@ -1,0 +1,36 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"main": "src/index.js",
+	"type": "module",
+	"scripts": {
+		"prettier": "prettier --write src/**/*.js",
+		"dev": "npm run prettier && nodemon src/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"backend": "file:",
+		"bcryptjs": "^2.4.3",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
+		"dotenv": "^16.4.5",
+		"express": "^4.21.1",
+		"firebase": "^11.0.1",
+		"joi": "^17.13.3",
+		"jsonwebtoken": "^9.0.2",
+		"lodash": "^4.17.21",
+		"mailtrap": "^3.4.0",
+		"mongoose": "^8.7.1",
+		"morgan": "^1.10.0",
+		"nodemailer": "^6.9.15",
+		"prettier": "^3.3.3",
+		"winston": "^3.15.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.7"
+	}
+}
