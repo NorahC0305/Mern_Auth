@@ -12,8 +12,13 @@ import logger from "./configs/logger.config.js";
 dotenv.config();
 const app = express();
 
-const allowedOrigins = [process.env.DEV_CLIENT_URL, process.env.PROD_CLIENT_URL];
+// Set allowed origins based on environment
+const allowedOrigins = [
+	process.env.DEV_CLIENT_URL,
+	process.env.PROD_CLIENT_URL,
+];
 
+// CORS Configuration
 app.use(
 	cors({
 		origin: (origin, callback) => {
@@ -22,6 +27,7 @@ app.use(
 			if (allowedOrigins.includes(origin)) {
 				return callback(null, true);
 			} else {
+				logger.warn(`Blocked by CORS: Origin ${origin}`);
 				return callback(new Error("Not allowed by CORS"));
 			}
 		},
@@ -34,18 +40,25 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Set up port from environment
 const PORT = process.env.PORT || 5000;
 
+// Connect to the database
 connectDB();
 
+// Test route
 app.get("/", (req, res) => {
 	res.send("Hello From Express");
 });
 
+// API routes and error handler
 app.use("/api", Routers);
 app.use(errorHandler);
 
+// Start the server
 app.listen(PORT, () => {
 	logger.info(`Server started on port http://localhost:${PORT}`);
-	logger.info(`Email Server: ${process.env.EMAIL_SENDER}`);
+	if (process.env.NODE_ENV === "development") {
+		logger.info(`Email Server: ${process.env.EMAIL_SENDER}`);
+	}
 });

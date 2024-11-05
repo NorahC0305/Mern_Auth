@@ -6,7 +6,8 @@
 	"scripts": {
 		"prettier": "prettier --write src/**/*.js",
 		"dev": "npm run prettier && nodemon src/index.js",
-		"start": "node src/index.js"
+		"start": "node src/index.js",
+		"build": "npm run prettier && node src/index.js"
 	},
 	"keywords": [],
 	"author": "",

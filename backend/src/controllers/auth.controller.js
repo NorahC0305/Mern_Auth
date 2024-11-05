@@ -115,8 +115,16 @@ class AuthController {
 	};
 
 	logout = async (req, res) => {
-		res.clearCookie("access_token");
-		res.clearCookie("refresh_token");
+		res.clearCookie("access_token", {
+			httpOnly: true,
+			sameSite: "none",
+			secure: true,
+		});
+		res.clearCookie("refresh_token", {
+			httpOnly: true,
+			sameSite: "none",
+			secure: true,
+		});
 		res.status(200).json({
 			status: "success",
 			message: "Logout successful",
