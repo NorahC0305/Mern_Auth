@@ -1,29 +1,30 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
-export const BASE_URL = "http://localhost:5000/api";
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-// Create an Axios instance
 const axiosInstance = axios.create({
 	baseURL: BASE_URL,
 	timeout: 10000,
 	withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use(
+	async (config) => {
+		const auth = getAuth();
+		const currentUser = auth.currentUser;
 
-axiosInstance.interceptors.request.use(async (config) => {
-	const auth = getAuth();
-	const currentUser = auth.currentUser;
-	
-	if (currentUser) {
-		const token = await currentUser.getIdToken(true);  
-		console.log(token)
-		config.headers.Authorization = `Bearer ${token}`;
-	}
-	
-	return config;
-}, (error) => {
-	return Promise.reject(error);
-});
+		if (currentUser) {
+			const token = await currentUser.getIdToken(true);
+			console.log(token);
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	},
+);
 
 // Intercept responses
 axiosInstance.interceptors.response.use(
