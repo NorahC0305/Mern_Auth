@@ -16,6 +16,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 	const floatingShapes = [
@@ -42,20 +43,6 @@ function App() {
 		},
 	];
 
-	const routes = [
-		{ path: "/", element: <HomePage /> },
-		{ path: "/signup", element: <SignUpPage /> },
-		{ path: "/login", element: <LoginPage /> },
-		{ path: "/verify-email", element: <EmailVerifyPage /> },
-		{ path: "/verify-otp", element: <OTPVerifyPage /> },
-		{ path: "/change-password", element: <ChangePasswordPage /> },
-		{ path: "/forgot-password", element: <ForgotPasswordPage /> },
-		{ path: "/reset-password/", element: <ResetPasswordPage /> },
-		{ path: "/profile", element: <Profile /> },
-		{ path: "/about", element: <About /> },
-		{ path: "*", element: <NotFoundPage /> },
-	];
-
 	return (
 		<div className="h-screen flex flex-col bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 relative overflow-hidden">
 			{floatingShapes.map((shape, index) => (
@@ -68,14 +55,46 @@ function App() {
 					delay={shape.delay}
 				/>
 			))}
-			{/* Sticky Header */}
 			<Header />
 
 			<div className="flex-1 overflow-auto h-screen flex items-center justify-center">
 				<Routes>
-					{routes.map((route, index) => (
-						<Route key={index} path={route.path} element={route.element} />
-					))}
+					{/* Public Routes */}
+					<Route path="/" element={<HomePage />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/signup" element={<SignUpPage />} />
+					<Route path="/login" element={<LoginPage />} />
+					<Route path="/verify-email" element={<EmailVerifyPage />} />
+					<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+					<Route path="/reset-password" element={<ResetPasswordPage />} />
+
+					{/* Protected Routes */}
+					<Route
+						path="/profile"
+						element={
+							<ProtectedRoute>
+								<Profile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/verify-otp"
+						element={
+							<ProtectedRoute>
+								<OTPVerifyPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/change-password"
+						element={
+							<ProtectedRoute>
+								<ChangePasswordPage />
+							</ProtectedRoute>
+						}
+					/>
+
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</div>
 
