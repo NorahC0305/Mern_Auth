@@ -65,8 +65,8 @@ function App() {
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/verify-email" element={<EmailVerifyPage />} />
+					<Route path="/verify-otp" element={<OTPVerifyPage />} />
 					<Route path="/forgot-password" element={<ForgotPasswordPage />} />
-					<Route path="/reset-password" element={<ResetPasswordPage />} />
 
 					{/* Protected Routes */}
 					<Route
@@ -78,10 +78,10 @@ function App() {
 						}
 					/>
 					<Route
-						path="/verify-otp"
+						path="/reset-password"
 						element={
 							<ProtectedRoute>
-								<OTPVerifyPage />
+								<ResetPasswordPage />
 							</ProtectedRoute>
 						}
 					/>
