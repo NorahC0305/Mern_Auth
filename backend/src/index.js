@@ -12,7 +12,7 @@ import logger from "./configs/logger.config.js";
 dotenv.config();
 const app = express();
 
-const allowedOrigins = [process.env.DEV_BASE_URL, process.env.PROD_BASE_URL];
+const allowedOrigins = [process.env.DEV_CLIENT_URL, process.env.PROD_CLIENT_URL];
 
 app.use(
 	cors({

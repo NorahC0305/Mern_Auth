@@ -32,7 +32,7 @@ class SendEmail {
 		const expirationMinutes = Math.round(
 			(verifyEmailExpiresAt - Date.now()) / 60000,
 		);
-		const verificationLink = `${process.env.CLIENT_URL}/verify-email?userId=${userId}&token=${verifyEmailToken}`;
+		const verificationLink = `${process.env.DEV_CLIENT_URL}/verify-email?userId=${userId}&token=${verifyEmailToken}`;
 		const htmlContent = EMAIL_VERiFICATION_TEMPLATE.replace(
 			"{verificationLink}",
 			verificationLink,
@@ -49,7 +49,7 @@ class SendEmail {
 
 	sendResetPasswordEmail = async (email, token, resetPasswordExpiresAt) => {
 		const subject = "Reset your password";
-		const resetURL = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+		const resetURL = `${process.env.DEV_CLIENT_URL}/reset-password?token=${token}`;
 
 		const expirationMinutes = Math.round(
 			(resetPasswordExpiresAt - Date.now()) / 60000,
