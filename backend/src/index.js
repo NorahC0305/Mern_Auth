@@ -12,13 +12,20 @@ import logger from "./configs/logger.config.js";
 dotenv.config();
 const app = express();
 
+const allowedOrigins = [process.env.DEV_BASE_URL, process.env.PROD_BASE_URL];
+
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: (origin, callback) => {
+			// Allow requests with no origin (like mobile apps or curl requests)
+			if (!origin) return callback(null, true);
+			if (allowedOrigins.includes(origin)) {
+				return callback(null, true);
+			} else {
+				return callback(new Error("Not allowed by CORS"));
+			}
+		},
 		credentials: true,
-		methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-		allowedHeaders: ["Content-Type", "Authorization"],
-		exposedHeaders: ["Content-Type", "Authorization"],
 	}),
 );
 
